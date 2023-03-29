@@ -6,5 +6,4 @@ import jakarta.persistence.Entity;
 public class Produktas {
 	
 	Long id;
-
 }
