@@ -1,4 +1,4 @@
-package lt.codeacademy.learn.baigiamasis;
+package lt.codeacademy.learn.baigiamasis.admin;
 
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import lt.codeacademy.learn.baigiamasis.user.UserRepository;
 
 
 @Component
-public class MyRunner implements CommandLineRunner{
+public class CreateAdmin implements CommandLineRunner{
 	
 	@Autowired
 	UserRepository userRepository;

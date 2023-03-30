@@ -1,4 +1,4 @@
-package lt.codeacademy.learn.baigiamasis.user;
+package lt.codeacademy.learn.baigiamasis.admin;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import lt.codeacademy.learn.baigiamasis.user.User;
+import lt.codeacademy.learn.baigiamasis.user.UserService;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class AdminController {
 	
 	@Autowired
 	private UserService userService;
