@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.AllArgsConstructor;
+import lt.codeacademy.learn.baigiamasis.user.Role;
 import lt.codeacademy.learn.baigiamasis.user.UserService;
 
 @Configuration
@@ -26,11 +27,12 @@ public class WebSecurityConfig  {
 		http
 			.csrf().disable()
 			.authorizeHttpRequests()
-			.requestMatchers("/api/registration/**").permitAll()
-			.anyRequest()
-			.authenticated().and()
+			.requestMatchers("/user/registration/**").permitAll()
+			.requestMatchers("/users/**").permitAll()
+			.requestMatchers("/**").permitAll().anyRequest().anonymous()
+			.and()
 			.formLogin();
-
+		
 		return http.build();	
 	}
 	

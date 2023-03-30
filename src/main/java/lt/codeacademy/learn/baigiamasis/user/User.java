@@ -4,21 +4,29 @@ import java.util.Collection;
 import java.util.Collections;
 
 
-
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationToken;
 
 @Getter
 @Setter
@@ -44,8 +52,11 @@ public class User implements UserDetails{
 	private Boolean locked = false;
 	private Boolean enabled = false;
 	
+	@OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
+	@Cascade(CascadeType.ALL)
+	ConfirmationToken confirmationToken;
+		
 	
-
 	public User() {
 		super();
 	}
@@ -74,6 +85,10 @@ public class User implements UserDetails{
 	public String getLastName() {
 		return lastName;
 	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -95,6 +110,14 @@ public class User implements UserDetails{
 		return enabled;
 	}
 	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public void setEnable(boolean enable) {
 		this.enabled = enable;
 	}
@@ -104,7 +127,7 @@ public class User implements UserDetails{
 		return firstName;
 	}
 
-	public void setName(String firstName) {
+	public void setfirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
@@ -134,7 +157,20 @@ public class User implements UserDetails{
 		this.role = role;
 	}
 
-	
+	public Long getId() {
+		return id;
+	}
 
-	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public ConfirmationToken getConfirmationToken() {
+		return confirmationToken;
+	}
+
+	public void setConfirmationToken(ConfirmationToken confirmationToken) {
+		this.confirmationToken = confirmationToken;
+	}
+
 }
