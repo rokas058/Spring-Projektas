@@ -1,6 +1,7 @@
 package lt.codeacademy.learn.baigiamasis.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -55,19 +56,38 @@ public class UserService implements UserDetailsService{
 		ConfirmationToken confirmationtoken = new ConfirmationToken(
 				token,
 				LocalDateTime.now(),
-				LocalDateTime.now().plusMinutes(15),
+				LocalDateTime.now().plusDays(1),
 				user
 				);
-
+		
+		
 		confirmationTokenService.saveConfirmationToken(confirmationtoken);
+		
+		user.setConfirmationToken(confirmationtoken);
 		
 		return token;
 	}
 
 	public void enableUser(String email) {
 		Optional<User> user = userRepository.findByEmail(email);
-		
 		user.get().setEnable(true);;
 		
 	}
+
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
+
+	public User findById(Long id) {
+		return userRepository.findById(id).get();
+	}
+
+	public void deleteById(Long id) {
+		userRepository.deleteById(id);		
+	}
+
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+	
 }
