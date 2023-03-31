@@ -10,9 +10,9 @@ import lombok.AllArgsConstructor;
 import lt.codeacademy.learn.baigiamasis.email.EmailSender;
 import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationToken;
 import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationTokenService;
-import lt.codeacademy.learn.baigiamasis.user.Role;
 import lt.codeacademy.learn.baigiamasis.user.User;
 import lt.codeacademy.learn.baigiamasis.user.UserService;
+import static lt.codeacademy.learn.baigiamasis.user.Roles.USER;;
 
 
 @Service
@@ -39,10 +39,10 @@ public class RegistrationService {
 					request.getLastName(),
 					request.getEmail(),
 					request.getPassword(),
-					Role.USER			
+					USER			
 				)	
 			);
-		String link = "http://localhost:8080/user/registration/confirm?token=" + token;
+		String link = "http://localhost:8080/registration/confirm?token=" + token;
 		emailSender.send(
 				request.getEmail(),
 				buildEmail(request.getFirstName(), link));

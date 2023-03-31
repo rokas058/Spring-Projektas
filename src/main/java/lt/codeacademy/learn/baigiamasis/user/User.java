@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -47,13 +47,13 @@ public class User implements UserDetails{
 	private String lastName;
 	private String email;
 	private String password;
-	@Enumerated(EnumType.STRING)
-	private Role role;
+	private String role;
 	private Boolean locked = false;
 	private Boolean enabled = false;
 	
 	@OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
+	@JsonManagedReference
 	ConfirmationToken confirmationToken;
 		
 	
@@ -61,7 +61,7 @@ public class User implements UserDetails{
 		super();
 	}
 
-	public User(String firstName, String lastName, String email, String password, Role role) {
+	public User(String firstName, String lastName, String email, String password, String role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -73,7 +73,7 @@ public class User implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		SimpleGrantedAuthority authority =
-				new SimpleGrantedAuthority(role.name());
+				new SimpleGrantedAuthority(role);
 		return Collections.singletonList(authority);
 	}
 
@@ -149,11 +149,11 @@ public class User implements UserDetails{
 		
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

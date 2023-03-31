@@ -8,9 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import lt.codeacademy.learn.baigiamasis.user.Role;
 import lt.codeacademy.learn.baigiamasis.user.User;
 import lt.codeacademy.learn.baigiamasis.user.UserRepository;
+import static lt.codeacademy.learn.baigiamasis.user.Roles.ADMIN;;
 
 
 @Component
@@ -28,7 +28,7 @@ public class CreateAdmin implements CommandLineRunner{
 			user.setEmail("admin");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			user.setPassword( encoder.encode("admin") );
-			user.setRole(Role.ADMIN);
+			user.setRole(ADMIN);
 			user.setEnable(true);
 			user = userRepository.save(user);
 		}

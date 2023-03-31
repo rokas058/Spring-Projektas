@@ -78,8 +78,8 @@ public class UserService implements UserDetailsService{
 		return userRepository.findAll();
 	}
 
-	public User findById(Long id) {
-		return userRepository.findById(id).get();
+	public Optional<User> findById(Long id) {
+		return userRepository.findById(id);
 	}
 
 	public void deleteById(Long id) {
