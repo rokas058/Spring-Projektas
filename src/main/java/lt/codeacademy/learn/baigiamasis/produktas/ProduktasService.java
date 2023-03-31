@@ -1,5 +1,6 @@
 package lt.codeacademy.learn.baigiamasis.produktas;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,4 +28,16 @@ public class ProduktasService {
 	public void delete(Produktas produktas) {
 		produktasRepository.delete(produktas);
 	}
+
+	public List<Produktas> findAllPaveikslai() {
+		List<Produktas> listasPaveikslu = new ArrayList<>();
+		List<Produktas> listas = produktasRepository.findAll();
+		for(Produktas p: listas) {
+			if(p.getKategorija().equals(Kategorija.PAVEIKSLAS)) {
+				listasPaveikslu.add(p);
+			}
+		}
+		return listasPaveikslu;
+	}
+		
 }

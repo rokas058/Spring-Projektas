@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/user/registration")
+@RequestMapping("/registration")
 @AllArgsConstructor
 public class RegistrationController {
 	

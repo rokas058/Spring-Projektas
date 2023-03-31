@@ -12,8 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.AllArgsConstructor;
-import lt.codeacademy.learn.baigiamasis.user.Role;
 import lt.codeacademy.learn.baigiamasis.user.UserService;
+import static lt.codeacademy.learn.baigiamasis.user.Roles.*;
 
 @Configuration
 @AllArgsConstructor
@@ -27,9 +27,9 @@ public class WebSecurityConfig  {
 		http
 			.csrf().disable()
 			.authorizeHttpRequests()
-			.requestMatchers("/user/registration/**").permitAll()
-			.requestMatchers("/users/**").permitAll()
-			.requestMatchers("/**").permitAll().anyRequest().anonymous()
+			.requestMatchers("/admin/**").permitAll()
+//			.requestMatchers("/admin/**").hasAuthority(ADMIN)
+			.requestMatchers("/**").permitAll()
 			.and()
 			.formLogin();
 		
