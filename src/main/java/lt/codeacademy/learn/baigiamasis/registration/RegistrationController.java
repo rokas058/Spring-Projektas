@@ -1,6 +1,7 @@
 package lt.codeacademy.learn.baigiamasis.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/registration")
+@CrossOrigin("http://localhost:3000")
 @AllArgsConstructor
 public class RegistrationController {
 	
