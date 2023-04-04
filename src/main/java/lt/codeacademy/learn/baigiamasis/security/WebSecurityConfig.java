@@ -51,6 +51,7 @@ public class WebSecurityConfig{
 		return provider;
 	}
 
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
