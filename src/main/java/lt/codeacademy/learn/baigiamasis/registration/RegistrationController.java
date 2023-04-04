@@ -1,6 +1,8 @@
 package lt.codeacademy.learn.baigiamasis.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,14 +21,19 @@ public class RegistrationController {
 	
 	@Autowired
 	private RegistrationService registrationService;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
 	
 	@PostMapping
-	public String register(@RequestBody RegistrationRequest request) {
-		return registrationService.register(request);
+	public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
+		registrationService.register(request);
+		return ResponseEntity.ok("User created");
 	}
 	
 	@GetMapping("/confirm")
-	public String confirm(@RequestParam("token") String token) {
-		return registrationService.confirmToken(token);
+	public ResponseEntity<String> confirm(@RequestParam("token") String token) {
+		registrationService.confirmToken(token);
+		return ResponseEntity.ok("Confirmed email");
 	}
 }
