@@ -22,8 +22,7 @@ public class RegistrationController {
 	@Autowired
 	private RegistrationService registrationService;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+
 	
 	@PostMapping
 	public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
