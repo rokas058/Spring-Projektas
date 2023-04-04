@@ -81,7 +81,7 @@ public class AdminController {
         
     }
 	
-    @DeleteMapping("/user{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable Long id) {
     	userService.deleteById(id);
     	return ResponseEntity.ok().build();
@@ -102,12 +102,7 @@ public class AdminController {
             return ResponseEntity.notFound().build();
         }
     }
-	 @PostMapping
-	    public ResponseEntity<Produktas> save(@RequestBody Produktas produktas) {
-	        Produktas savedProduct = produktasService.save(produktas);
-	        return ResponseEntity.ok(savedProduct);
-	    }
- 
+
 	 @PostMapping("/product/create")
 	 public ResponseEntity<Produktas> createProduct(
 	     @RequestParam("pavadinimas") String pavadinimas,
@@ -124,6 +119,7 @@ public class AdminController {
 	     product.setKategorija(kategorija);
 	     product.setIsmatavimai(ismatavimia);
 	     product.setKurejas(kurejas);
+		 product.setKaina(kaina);
 	     product.setPhoto(photo.getBytes());
 	     
 
