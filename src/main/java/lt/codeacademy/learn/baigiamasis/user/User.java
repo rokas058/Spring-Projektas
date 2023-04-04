@@ -31,7 +31,6 @@ import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationToken;
 @Getter
 @Setter
 @EqualsAndHashCode
-@NoArgsConstructor
 @Entity
 public class User implements UserDetails{
 

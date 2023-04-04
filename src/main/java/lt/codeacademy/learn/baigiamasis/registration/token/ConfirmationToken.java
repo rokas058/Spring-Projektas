@@ -24,7 +24,6 @@ import lt.codeacademy.learn.baigiamasis.user.User;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 public class ConfirmationToken {
 	

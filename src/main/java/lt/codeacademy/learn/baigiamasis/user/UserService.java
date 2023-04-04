@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import lt.codeacademy.learn.baigiamasis.security.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
 import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationToken;
 import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationTokenService;
-import lt.codeacademy.learn.baigiamasis.security.WebSecurityConfig;
+
 
 @Service
 @AllArgsConstructor
