@@ -39,5 +39,37 @@ public class ProduktasService {
 		}
 		return listasPaveikslu;
 	}
-		
+
+	public List<Produktas> findAllFotografijos() {
+		List<Produktas> listasFotografiju = new ArrayList<>();
+		List<Produktas> listas = produktasRepository.findAll();
+		for (Produktas p : listas) {
+			if(p.getKategorija().equals(Kategorija.FOTOGRAFIJA)){
+				listasFotografiju.add(p);
+			}
+		}
+		return listasFotografiju;
+	}
+
+	public List<Produktas> findAllSkulpturos() {
+		List<Produktas> listasSkulpturu = new ArrayList<>();
+		List<Produktas> listas = produktasRepository.findAll();
+		for (Produktas p : listas) {
+			if(p.getKategorija().equals(Kategorija.SKULPTURA)){
+				listasSkulpturu.add(p);
+			}
+		}
+		return listasSkulpturu;
+	}
+
+	public List<Produktas> findAllKeramika() {
+		List<Produktas> listasKeramika = new ArrayList<>();
+		List<Produktas> listas = produktasRepository.findAll();
+		for (Produktas p : listas) {
+			if(p.getKategorija().equals(Kategorija.KERAMIKA)){
+				listasKeramika.add(p);
+			}
+		}
+		return listasKeramika;
+	}
 }

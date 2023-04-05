@@ -1,13 +1,7 @@
 package lt.codeacademy.learn.baigiamasis.produktas;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +27,8 @@ public class Produktas {
 	private Long kaina;
 	
 	@Lob
-    private byte[] photo;
+	@Column(length = 10000000)
+	private byte[] photo;
 
 	public Produktas() {
 		super();
