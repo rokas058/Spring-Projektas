@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +56,7 @@ public class AdminController {
 	@GetMapping("/user/{id}")
     public ResponseEntity<User> getClient(@PathVariable Long id) {
 		Optional<User> user = userService.findById(id);
-		if (user.isPresent()) {
-			return ResponseEntity.ok(user.get());
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+		return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 	
 	@PutMapping("/user/{id}")
@@ -77,8 +74,6 @@ public class AdminController {
         	
 			return ResponseEntity.notFound().build();
 		}
-        
-        
     }
 	
     @DeleteMapping("/user/{id}")
@@ -96,15 +91,11 @@ public class AdminController {
     public ResponseEntity<Produktas> findById(@PathVariable Long id) {
         Optional<Produktas> product = produktasService.findById(id);
 
-        if (product.isPresent()) {
-            return ResponseEntity.ok(product.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+		return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-	 @PostMapping("/product/create")
-	 public ResponseEntity<Produktas> createProduct(
+	 @PostMapping("/product")
+	 public ResponseEntity<?> createProduct(
 	     @RequestParam("pavadinimas") String pavadinimas,
 	     @RequestParam("kategorija") String kategorijaStr,
 	     @RequestParam("ismatavimai") String ismatavimia,
@@ -121,23 +112,40 @@ public class AdminController {
 	     product.setKurejas(kurejas);
 		 product.setKaina(kaina);
 	     product.setPhoto(photo.getBytes());
-	     
 
-	     
-	     String filename = StringUtils.cleanPath(photo.getOriginalFilename());
-	     Path uploadDir = Paths.get("photos");
-	     if (!Files.exists(uploadDir)) {
-	         Files.createDirectories(uploadDir);
-	     }
-	     try (InputStream inputStream = photo.getInputStream()) {
-	         Path filePath = uploadDir.resolve(filename);
-	         Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-	         product.setPhoto(filePath.toString().getBytes());
-	     }
+		 String filename = StringUtils.cleanPath(Objects.requireNonNull(photo.getOriginalFilename()));
+		 Path uploadDir = Paths.get("photos");
+		 if (!Files.exists(uploadDir)) {
+			 Files.createDirectories(uploadDir);
+		 }
+		 try (InputStream inputStream = photo.getInputStream()) {
+			 Path filePath = uploadDir.resolve(filename);
+			 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+			 product.setPhoto(filePath.toString().getBytes());
+		 }
 
 	     Produktas savedProduct = produktasService.save(product);
-	     return ResponseEntity.ok(savedProduct);
+	     return ResponseEntity.ok("created product");
 	 }
+
+	@PutMapping("/product/{id}")
+	public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Produktas produktas) throws RuntimeException {
+		Optional<Produktas> currentProduktas = produktasService.findById(id);
+		if (currentProduktas.isPresent()) {
+			Produktas currentProduktasChange = currentProduktas.get();
+			currentProduktasChange.setPavadinimas(produktas.getPavadinimas());
+			currentProduktasChange.setKategorija(produktas.getKategorija());
+			currentProduktasChange.setIsmatavimai(produktas.getIsmatavimai());
+			currentProduktasChange.setKurejas(produktas.getKurejas());
+			currentProduktasChange.setKaina(produktas.getKaina());
+			currentProduktasChange.setPhoto(produktas.getPhoto());
+			currentProduktasChange = produktasService.save(currentProduktasChange);
+			return ResponseEntity.ok("updated product");
+		} else {
+
+			return ResponseEntity.notFound().build();
+		}
+	}
 	 
 	 @DeleteMapping("/product/{id}")
 	    public ResponseEntity<?> delete(@PathVariable Long id) {

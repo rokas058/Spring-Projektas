@@ -31,4 +31,20 @@ public class ProductController {
 	public List<Produktas> findAllPaveikslai(){
 		return produktasService.findAllPaveikslai();
 	}
+
+	@GetMapping("/fotografijos")
+	public List<Produktas> findAllFotografijos(){
+		return produktasService.findAllFotografijos();
+	}
+
+	@GetMapping("/skulpturos")
+	public List<Produktas> findAllSkulpturos(){
+		return produktasService.findAllSkulpturos();
+	}
+
+	@GetMapping("/keramika")
+	public List<Produktas> findAllKeramika(){
+		return produktasService.findAllKeramika();
+	}
 }
+
