@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/registration")
 @CrossOrigin("http://localhost:3000")
 @AllArgsConstructor
 public class RegistrationController {
@@ -35,7 +34,7 @@ public class RegistrationController {
 	@Autowired
 	private JwtGenerator jwtGenerator;
 	
-	@PostMapping
+	@PostMapping("registration")
 	public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
 		registrationService.register(request);
 		return ResponseEntity.ok("User created");
