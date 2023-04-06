@@ -113,17 +113,6 @@ public class AdminController {
 		 product.setKaina(kaina);
 	     product.setPhoto(photo.getBytes());
 
-		 String filename = StringUtils.cleanPath(Objects.requireNonNull(photo.getOriginalFilename()));
-		 Path uploadDir = Paths.get("photos");
-		 if (!Files.exists(uploadDir)) {
-			 Files.createDirectories(uploadDir);
-		 }
-		 try (InputStream inputStream = photo.getInputStream()) {
-			 Path filePath = uploadDir.resolve(filename);
-			 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-			 product.setPhoto(filePath.toString().getBytes());
-		 }
-
 	     Produktas savedProduct = produktasService.save(product);
 	     return ResponseEntity.ok("created product");
 	 }
