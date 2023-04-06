@@ -29,7 +29,13 @@ public class ProductController {
 	
 	@GetMapping("/paveikslai")
 	public List<Produktas> findAllPaveikslai(){
-		return produktasService.findAllPaveikslai();
+		List<Produktas> paveikslai = produktasService.findAllPaveikslai();
+		for(Produktas paveikslas: paveikslai){
+			byte[] photoBytes = paveikslas.getPhoto();
+			paveikslas.setPhoto(photoBytes);
+		}
+		return paveikslai;
+
 	}
 
 	@GetMapping("/fotografijos")
