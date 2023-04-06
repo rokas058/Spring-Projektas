@@ -84,7 +84,12 @@ public class AdminController {
     
 	@GetMapping("/product")
     public List<Produktas> findAll() {
-        return produktasService.findAll();
+		List<Produktas> produktai =  produktasService.findAll();
+		for (Produktas produktas: produktai){
+			byte[] photoBytes = produktas.getPhoto();
+			produktas.setPhoto(photoBytes);
+		}
+		return produktai;
     }
     
 	@GetMapping("/product/{id}")
