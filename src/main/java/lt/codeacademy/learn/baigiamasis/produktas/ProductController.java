@@ -2,16 +2,12 @@ package lt.codeacademy.learn.baigiamasis.produktas;
 
 
 import java.util.List;
+import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -40,17 +36,45 @@ public class ProductController {
 
 	@GetMapping("/fotografijos")
 	public List<Produktas> findAllFotografijos(){
-		return produktasService.findAllFotografijos();
+		List<Produktas> fotografijos = produktasService.findAllFotografijos();
+		for (Produktas fotografija: fotografijos){
+			byte[] photoBytes = fotografija.getPhoto();
+			fotografija.setPhoto(photoBytes);
+		}
+		return fotografijos;
 	}
 
 	@GetMapping("/skulpturos")
 	public List<Produktas> findAllSkulpturos(){
-		return produktasService.findAllSkulpturos();
+		List<Produktas> skulpturos = produktasService.findAllSkulpturos();
+		for (Produktas skulptura: skulpturos){
+			byte[] photoBytes = skulptura.getPhoto();
+			skulptura.setPhoto(photoBytes);
+		}
+		return skulpturos;
 	}
 
 	@GetMapping("/keramika")
 	public List<Produktas> findAllKeramika(){
-		return produktasService.findAllKeramika();
+		List<Produktas> keramikos = produktasService.findAllKeramika();
+		for (Produktas keramika: keramikos){
+			byte[] photoBytes = keramika.getPhoto();
+			keramika.setPhoto(photoBytes);
+		}
+		return keramikos;
+	}
+
+	@GetMapping("/{kategorija}/{id}")
+	public ResponseEntity<Produktas> findById(@PathVariable Long id, @PathVariable String kategorija) {
+		Optional<Produktas> optProduktas = produktasService.findById(id);
+
+		if (optProduktas.isPresent()) {
+			Produktas produktas = optProduktas.get();
+			return ResponseEntity.ok(produktas);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
 	}
 }
 
