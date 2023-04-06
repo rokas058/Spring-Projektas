@@ -27,7 +27,7 @@ public class Produktas {
 	private Long kaina;
 	
 	@Lob
-	@Column(length = 10000)
+	@Column(length = 10000000git)
 	private byte[] photo;
 
 	public Produktas() {
