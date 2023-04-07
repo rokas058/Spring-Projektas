@@ -64,9 +64,10 @@ public class ProductController {
 		return keramikos;
 	}
 
-	@GetMapping("/{kategorija}/{id}")
-	public ResponseEntity<Produktas> findById(@PathVariable Long id, @PathVariable String kategorija) {
+	@GetMapping("/{id}")
+	public ResponseEntity<Produktas> findById(@PathVariable Long id) {
 		Optional<Produktas> optProduktas = produktasService.findById(id);
+
 
 		if (optProduktas.isPresent()) {
 			Produktas produktas = optProduktas.get();
