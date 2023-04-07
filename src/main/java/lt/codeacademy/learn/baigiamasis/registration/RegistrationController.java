@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
-@RequestMapping("/registration")
 @AllArgsConstructor
 public class RegistrationController {
 	
@@ -29,7 +28,7 @@ public class RegistrationController {
 	@Autowired
 	private JwtGenerator jwtGenerator;
 	
-	@PostMapping
+	@PostMapping("/registration")
 	public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
 		registrationService.register(request);
 		return ResponseEntity.ok("User created");
@@ -44,7 +43,7 @@ public class RegistrationController {
 		return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
 	}
 	
-	@GetMapping("/confirm")
+	@GetMapping("registration/confirm")
 	public ResponseEntity<?> confirm(@RequestParam("token") String token) {
 		registrationService.confirmToken(token);
 		return ResponseEntity.ok("Confirmed email");
