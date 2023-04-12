@@ -2,29 +2,20 @@ package lt.codeacademy.learn.baigiamasis.user;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 
+import jakarta.persistence.*;
+import lt.codeacademy.learn.baigiamasis.purchase.Purchase;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationToken;
 
@@ -51,9 +42,12 @@ public class User implements UserDetails{
 	private Boolean enabled = false;
 	
 	@OneToOne(mappedBy = "user",fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	@JsonManagedReference
 	ConfirmationToken confirmationToken;
+
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	private List<Purchase> purchases;
 		
 	
 	public User() {
@@ -172,4 +166,11 @@ public class User implements UserDetails{
 		this.confirmationToken = confirmationToken;
 	}
 
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
 }
