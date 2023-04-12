@@ -28,7 +28,7 @@ public class RegistrationService {
 	@Autowired
 	private EmailSender emailSender;
 	
-	public String register(RegistrationRequest request) {
+	public void register(RegistrationRequest request) {
 		boolean isValidEmail = emailValidator.test(request.getEmail());
 		if(!isValidEmail) {
 			throw new IllegalStateException("email not valid");
@@ -46,12 +46,11 @@ public class RegistrationService {
 		emailSender.send(
 				request.getEmail(),
 				buildEmail(request.getFirstName(), link));
-		
-		return token;
+
 	}
 	
 	@Transactional
-	public String confirmToken(String token) {
+	public void confirmToken(String token) {
 		ConfirmationToken confirmationToken = confirmationTokenService
 				.getToken(token)
 				.orElseThrow(() -> new IllegalStateException("token not found"));
@@ -69,8 +68,7 @@ public class RegistrationService {
 		confirmationTokenService.setConfirmedAt(token);
 		userService.enableUser(
 				confirmationToken.getUser().getEmail());
-		
-		return "confirmed";
+
 	}
 
 	private String buildEmail(String name, String link) {

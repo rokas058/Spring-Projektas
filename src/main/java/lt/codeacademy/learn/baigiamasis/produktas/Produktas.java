@@ -5,6 +5,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lt.codeacademy.learn.baigiamasis.purchase.Purchase;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,6 +37,10 @@ public class Produktas {
 	@Lob
 	@Column(length = 10000000)
 	private byte[] photo;
+
+	@ManyToMany(mappedBy = "products", cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+	private List<Purchase> purchase;
+
 
 	public Produktas() {
 		super();
@@ -112,6 +124,12 @@ public class Produktas {
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
-	
 
+	public List<Purchase> getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(List<Purchase> purchase) {
+		this.purchase = purchase;
+	}
 }
