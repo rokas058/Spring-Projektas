@@ -47,7 +47,7 @@ public class User implements UserDetails{
 	@JsonManagedReference
 	ConfirmationToken confirmationToken;
 
-	@JsonBackReference
+
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	private List<Purchase> purchases;
 		

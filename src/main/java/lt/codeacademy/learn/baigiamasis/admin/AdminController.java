@@ -1,11 +1,14 @@
 package lt.codeacademy.learn.baigiamasis.admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import lt.codeacademy.learn.baigiamasis.purchase.Purchase;
 import lt.codeacademy.learn.baigiamasis.purchase.PurchaseService;
+import lt.codeacademy.learn.baigiamasis.purchase.dto.PurchaseDto;
+import lt.codeacademy.learn.baigiamasis.purchase.dto.PurchaseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -152,8 +155,63 @@ public class AdminController {
 	}
 
 	@GetMapping("/purchase")
-	public List<Purchase> findAllPurchases(){
+	public List<PurchaseDto> findAllPurchases(){
 		List<Purchase> purchases = purchaseService.findAllPurchasesNotConfirm();
-		return purchases;
+		List<PurchaseDto> purchasesDto = new ArrayList<>();
+		for (Purchase purchase: purchases){
+			List<Long> productsId = new ArrayList<>();
+			for (Produktas produktas: purchase.getProducts()){
+				productsId.add(produktas.getId());
+			}
+			PurchaseDto purchaseDto = new PurchaseDto(
+					purchase.getId(),
+					purchase.getUser().getId(),
+					purchase.getUser().getfirstName(),
+					purchase.getUser().getLastName(),
+					purchase.getUser().getEmail(),
+					productsId,
+					purchase.getConfirm()
+					);
+			purchasesDto.add(purchaseDto);
+		}
+		return purchasesDto;
 	}
+
+	@GetMapping("/purchase/{id}")
+	public ResponseEntity<PurchaseDto> getPurchase(@PathVariable Long id){
+		Optional<Purchase> purchaseOpt = purchaseService.findById(id);
+		if (purchaseOpt.isPresent()) {
+			Purchase purchase = purchaseOpt.get();
+			List<Long> productsId = new ArrayList<>();
+			for (Produktas produktas : purchase.getProducts()) {
+				productsId.add(produktas.getId());
+			}
+			PurchaseDto purchaseDto = new PurchaseDto();
+			purchaseDto.setId(purchase.getId());
+			purchaseDto.setUserId(purchase.getUser().getId());
+			purchaseDto.setUserFirstName(purchase.getUser().getfirstName());
+			purchaseDto.setUserLastName(purchase.getUser().getLastName());
+			purchaseDto.setUserEmail(purchase.getUser().getEmail());
+			purchaseDto.setProductsId(productsId);
+			purchaseDto.setPurchaseConfirm(purchase.getConfirm());
+			return ResponseEntity.ok(purchaseDto);
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PutMapping("/purchase/{id}")
+	public ResponseEntity<?> purchaseConfirm(@PathVariable Long id){
+		Optional<Purchase> purchaseOpt = purchaseService.findById(id);
+		if (purchaseOpt.isPresent()){
+			Purchase purchase = purchaseOpt.get();
+			purchase.setConfirm(true);
+			purchaseService.save(purchase);
+			return  ResponseEntity.ok("Confirm");
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 }
