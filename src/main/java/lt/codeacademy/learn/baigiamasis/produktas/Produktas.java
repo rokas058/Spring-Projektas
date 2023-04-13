@@ -1,6 +1,7 @@
 package lt.codeacademy.learn.baigiamasis.produktas;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,7 @@ public class Produktas {
 	@Lob
 	@Column(length = 10000000)
 	private byte[] photo;
+
 
 	@ManyToMany(mappedBy = "products", cascade = {CascadeType.MERGE,CascadeType.REMOVE})
 	private List<Purchase> purchase;

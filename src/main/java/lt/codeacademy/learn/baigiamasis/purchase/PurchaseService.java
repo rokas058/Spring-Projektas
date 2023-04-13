@@ -6,8 +6,9 @@ import lt.codeacademy.learn.baigiamasis.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @Service
 public class PurchaseService {
@@ -21,5 +22,16 @@ public class PurchaseService {
         purchase.setProducts(products);
 
         purchaseRepository.save(purchase);
+    }
+
+    public List<Purchase> findAllPurchasesNotConfirm() {
+        List<Purchase> purchases = new ArrayList<>();
+        List<Purchase> list = purchaseRepository.findAll();
+        for (Purchase p: list){
+            if (p.getConfirm().equals(false)){
+                purchases.add(p);
+            }
+        }
+        return purchases;
     }
 }
