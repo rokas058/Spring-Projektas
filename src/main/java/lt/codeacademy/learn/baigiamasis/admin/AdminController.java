@@ -2,6 +2,7 @@ package lt.codeacademy.learn.baigiamasis.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,7 +125,7 @@ public class AdminController {
 	}
 
 	@PutMapping("/product/{id}")
-	public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Produktas produktas) throws RuntimeException {
+	public ResponseEntity<?> updateProduct(@PathVariable Long id,@RequestParam MultipartFile file, @RequestBody Produktas produktas) throws RuntimeException, IOException {
 		Optional<Produktas> currentProduktas = produktasService.findById(id);
 		if (currentProduktas.isPresent()) {
 			Produktas currentProduktasChange = currentProduktas.get();
@@ -133,6 +134,8 @@ public class AdminController {
 			currentProduktasChange.setIsmatavimai(produktas.getIsmatavimai());
 			currentProduktasChange.setKurejas(produktas.getKurejas());
 			currentProduktasChange.setKaina(produktas.getKaina());
+			byte [] photoBytes = file.getBytes();
+			currentProduktasChange.setPhoto(photoBytes);
 			currentProduktasChange.setPhoto(produktas.getPhoto());
 			produktasService.save(currentProduktasChange);
 			return ResponseEntity.ok("updated product");
