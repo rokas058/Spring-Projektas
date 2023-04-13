@@ -28,7 +28,7 @@ public class Purchase {
     )
     private List<Produktas> products;
 
-    @JsonManagedReference
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
