@@ -1,10 +1,12 @@
 package lt.codeacademy.learn.baigiamasis.purchase;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lt.codeacademy.learn.baigiamasis.produktas.Produktas;
 import lt.codeacademy.learn.baigiamasis.user.User;
-import org.hibernate.annotations.OnDelete;
+
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class Purchase {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "purchase_product",
@@ -25,9 +28,12 @@ public class Purchase {
     )
     private List<Produktas> products;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    private Boolean confirm = false;
 
     public Purchase() {
     }
@@ -65,6 +71,14 @@ public class Purchase {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(Boolean confirm) {
+        this.confirm = confirm;
     }
 
     @Override

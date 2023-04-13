@@ -1,25 +1,25 @@
 package lt.codeacademy.learn.baigiamasis.registration.dto;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 @Data
 
 public class AuthResponseDTO {
-    private String accesToken;
+    private String accessToken;
     private String tokenType = "Bearer ";
 
     public AuthResponseDTO(String token) {
-        this.accesToken=token;
+        this.accessToken=token;
     }
 
-    public String getAccesToken() {
-        return accesToken;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccesToken(String accesToken) {
-        this.accesToken = accesToken;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getTokenType() {

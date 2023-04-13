@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lt.codeacademy.learn.baigiamasis.purchase.Purchase;
 import org.hibernate.annotations.Cascade;
@@ -46,6 +47,7 @@ public class User implements UserDetails{
 	@JsonManagedReference
 	ConfirmationToken confirmationToken;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
 	private List<Purchase> purchases;
 		
