@@ -125,7 +125,7 @@ public class AdminController {
 	}
 
 	@PutMapping("/product/{id}")
-	public ResponseEntity<?> updateProduct(@PathVariable Long id,@RequestParam MultipartFile file, @RequestBody Produktas produktas) throws RuntimeException, IOException {
+	public ResponseEntity<?> updateProduct(@PathVariable Long id,@RequestBody Produktas produktas) throws RuntimeException{
 		Optional<Produktas> currentProduktas = produktasService.findById(id);
 		if (currentProduktas.isPresent()) {
 			Produktas currentProduktasChange = currentProduktas.get();
@@ -134,8 +134,6 @@ public class AdminController {
 			currentProduktasChange.setIsmatavimai(produktas.getIsmatavimai());
 			currentProduktasChange.setKurejas(produktas.getKurejas());
 			currentProduktasChange.setKaina(produktas.getKaina());
-			byte [] photoBytes = file.getBytes();
-			currentProduktasChange.setPhoto(photoBytes);
 			currentProduktasChange.setPhoto(produktas.getPhoto());
 			produktasService.save(currentProduktasChange);
 			return ResponseEntity.ok("updated product");
