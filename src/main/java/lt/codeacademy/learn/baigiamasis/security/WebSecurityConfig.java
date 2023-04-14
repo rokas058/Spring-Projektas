@@ -33,8 +33,8 @@ public class WebSecurityConfig{
 		http
 			.csrf().disable()
 			.authorizeHttpRequests()
-//			.requestMatchers("/admin/**").hasAuthority(Roles.ADMIN)
-			.requestMatchers("/admin/**").permitAll()
+			.requestMatchers("/admin/**").hasAuthority(Roles.ADMIN)
+//			.requestMatchers("/admin/**").permitAll()
 			.requestMatchers("/user/**").hasAuthority(Roles.USER)
 			.requestMatchers("/**").permitAll()
 			.anyRequest().authenticated()
