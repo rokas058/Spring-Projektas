@@ -23,51 +23,55 @@ public class CreateAdmin implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		Optional<User> userAdmin = userRepository.findByEmail("admin");
+		Optional<User> user1 = userRepository.findByEmail("a.b@gmail.com");
+		Optional<User> user2 = userRepository.findByEmail("a.c@gmail.com");
+		Optional<User> user3 = userRepository.findByEmail("a.d@gmail.com");
 		
 		if(userAdmin.isEmpty()) {
 			User user = new User();
 			user.setEmail("admin");
+			user.setfirstName("admin");
+			user.setLastName("admin");
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			user.setPassword( encoder.encode("admin") );
 			user.setRole(ADMIN);
 			user.setEnable(true);
 			userRepository.save(user);
 		}
-		User user1 = new User();
-		user1.setEmail("a.b@gmail.com");
-		user1.setfirstName("a");
-		user1.setLastName("b");
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		user1.setPassword( encoder.encode("1234"));
-		user1.setRole(USER);
-		user1.setEnable(true);
-		userRepository.save(user1);
+		if(user1.isEmpty()) {
+			User user = new User();
+			user.setEmail("a.b@gmail.com");
+			user.setfirstName("a");
+			user.setLastName("b");
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			user.setPassword(encoder.encode("1234"));
+			user.setRole(USER);
+			user.setEnable(true);
+			userRepository.save(user);
+		}
+		if(user2.isEmpty()) {
+			User user = new User();
+			user.setEmail("a.c@gmail.com");
+			user.setfirstName("a");
+			user.setLastName("c");
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			user.setPassword(encoder.encode("1234"));
+			user.setRole(USER);
+			user.setEnable(true);
+			userRepository.save(user);
+		}
+		if(user3.isEmpty()) {
+			User user = new User();
+			user.setEmail("a.d@gmail.com");
+			user.setfirstName("a");
+			user.setLastName("d");
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			user.setPassword(encoder.encode("1234"));
+			user.setRole(USER);
+			user.setEnable(true);
+			userRepository.save(user);
+		}
 
-		User user2 = new User();
-		user2.setEmail("a.c@gmail.com");
-		user2.setfirstName("a");
-		user2.setLastName("c");
-		PasswordEncoder encoder2 = new BCryptPasswordEncoder();
-		user2.setPassword( encoder.encode("1234"));
-		user2.setRole(USER);
-		user2.setEnable(true);
-		userRepository.save(user2);
-
-		User user3 = new User();
-		user3.setEmail("a.d@gmail.com");
-		user3.setfirstName("a");
-		user3.setLastName("d");
-		PasswordEncoder encoder3 = new BCryptPasswordEncoder();
-		user3.setPassword( encoder.encode("1234"));
-		user3.setRole(USER);
-		user3.setEnable(true);
-		userRepository.save(user3);
-
-
-			
-		
-		
-		
 	}
 
 }
