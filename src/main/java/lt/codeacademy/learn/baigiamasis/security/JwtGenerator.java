@@ -41,7 +41,6 @@ public class JwtGenerator {
     }
 
     public boolean validateToken(String token){
-        System.out.println(token);
         try {
             Jwts.parserBuilder().setSigningKey(JWT_SECRET).build().parseClaimsJws(token);
             return true;

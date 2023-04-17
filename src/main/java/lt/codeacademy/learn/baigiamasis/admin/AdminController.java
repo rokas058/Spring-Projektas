@@ -69,11 +69,29 @@ public class AdminController {
 			currentUserChange.setfirstName(user.getfirstName());
 			currentUserChange.setLastName(user.getLastName());
 			currentUserChange.setEmail(user.getEmail());
-			currentUserChange.setEnable(user.getEnabled());
 			currentUserChange = userService.save(currentUserChange);
 			return ResponseEntity.ok(currentUserChange);
 		} else {
 
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PutMapping("/user/enable/{id}")
+	public ResponseEntity<?> enableUser(@PathVariable Long id){
+		Optional<User> userOpt = userService.findById(id);
+		if(userOpt.isPresent()){
+			User user = userOpt.get();
+			if (!user.getEnabled()){
+				user.setEnable(true);
+				userService.save(user);
+				return ResponseEntity.ok("Enabled");
+			}else {
+				user.setEnable(false);
+				userService.save(user);
+				return ResponseEntity.ok("Disabled");
+			}
+		}else {
 			return ResponseEntity.notFound().build();
 		}
 	}
