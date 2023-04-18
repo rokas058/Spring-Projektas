@@ -1,5 +1,6 @@
 package lt.codeacademy.learn.baigiamasis.user;
 
+import java.security.cert.Extension;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +31,9 @@ public class UserService implements UserDetailsService{
 	private WebSecurityConfig webSecurityConfig;
 	@Autowired
 	private ConfirmationTokenService confirmationTokenService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -90,5 +95,12 @@ public class UserService implements UserDetailsService{
 	public User save(User user) {
 		return userRepository.save(user);
 	}
-	
+
+	public boolean passwordsMatch(String oldPassword, String newPassword) {
+		return passwordEncoder.matches(oldPassword, newPassword);
+	}
+
+	public String passwordEncoder(String newPassword) {
+		return passwordEncoder.encode(newPassword);
+	}
 }
