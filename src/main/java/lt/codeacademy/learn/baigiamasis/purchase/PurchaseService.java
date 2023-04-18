@@ -3,7 +3,9 @@ package lt.codeacademy.learn.baigiamasis.purchase;
 import jakarta.transaction.Transactional;
 import lt.codeacademy.learn.baigiamasis.produktas.Produktas;
 import lt.codeacademy.learn.baigiamasis.user.User;
+import lt.codeacademy.learn.baigiamasis.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,8 +18,14 @@ public class PurchaseService {
 
     @Autowired
     private PurchaseRepository purchaseRepository;
+
+    @Autowired
+    private UserService userService;
+
     @Transactional
-    public void createPurchase(User user, List<Produktas> products) {
+    public void createPurchase(String email, List<Produktas> products) {
+        UserDetails userDetails = userService.loadUserByUsername(email);
+        User user = (User) userDetails;
         Purchase purchase = new Purchase();
         purchase.setUser(user);
         purchase.setProducts(products);
