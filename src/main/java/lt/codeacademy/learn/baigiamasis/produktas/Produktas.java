@@ -3,6 +3,7 @@ package lt.codeacademy.learn.baigiamasis.produktas;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,7 +37,8 @@ public class Produktas {
 	private Long kaina;
 	
 	@Lob
-	@Column(length = 10000000)
+	@Column(length = 10485760)
+	@Size(max = 10485760, message = "The photo file size cannot exceed 10 MB")
 	private byte[] photo;
 
 
