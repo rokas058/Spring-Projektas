@@ -130,6 +130,10 @@ public class AdminController {
 
 		Kategorija kategorija = Kategorija.valueOf(kategorijaStr);
 
+		if (photo.getSize() > 10485760) {
+			return ResponseEntity.badRequest().body("The photo file size cannot exceed 10 MB");
+		}
+
 		Produktas product = new Produktas();
 		product.setPavadinimas(pavadinimas);
 		product.setKategorija(kategorija);

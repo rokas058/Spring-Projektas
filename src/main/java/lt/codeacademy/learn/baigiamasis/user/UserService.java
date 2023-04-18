@@ -1,6 +1,5 @@
 package lt.codeacademy.learn.baigiamasis.user;
 
-import java.security.cert.Extension;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -89,7 +88,17 @@ public class UserService implements UserDetailsService{
 	}
 
 	public void deleteById(Long id) {
-		userRepository.deleteById(id);		
+		Optional<User> userOptional = userRepository.findById(id);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			if (user.getEmail().equals("admin")) {
+				throw new IllegalArgumentException("Can't delete admin");
+			} else {
+				userRepository.deleteById(id);
+			}
+		} else {
+			throw new IllegalArgumentException("User not found");
+		}
 	}
 
 	public User save(User user) {
