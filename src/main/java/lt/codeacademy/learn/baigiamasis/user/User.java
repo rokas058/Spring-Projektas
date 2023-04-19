@@ -56,6 +56,12 @@ public class User implements UserDetails{
 		super();
 	}
 
+	public User(String firstName, String lastName, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
 	public User(String firstName, String lastName, String email, String password, String role) {
 		super();
 		this.firstName = firstName;
@@ -107,10 +113,6 @@ public class User implements UserDetails{
 	
 	public Boolean getEnabled() {
 		return enabled;
-	}
-
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public void setEnable(boolean enable) {
