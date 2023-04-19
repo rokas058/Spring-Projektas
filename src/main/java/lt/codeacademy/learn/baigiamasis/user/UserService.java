@@ -75,8 +75,11 @@ public class UserService implements UserDetailsService{
 
 	public void enableUser(String email) {
 		Optional<User> user = userRepository.findByEmail(email);
-		user.get().setEnable(true);;
-		
+		if(user.isPresent()){
+			user.get().setEnable(true);
+		}else {
+			throw new IllegalArgumentException("User with email " + email + " not found");
+		}
 	}
 
 	public List<User> findAll() {
