@@ -1,6 +1,9 @@
 package lt.codeacademy.learn.baigiamasis;
 
 import jakarta.transaction.Transactional;
+import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationToken;
+import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationTokenRepository;
+import lt.codeacademy.learn.baigiamasis.registration.token.ConfirmationTokenService;
 import lt.codeacademy.learn.baigiamasis.user.User;
 import lt.codeacademy.learn.baigiamasis.user.UserRepository;
 import lt.codeacademy.learn.baigiamasis.user.UserService;
@@ -25,6 +28,12 @@ public class UserServiceTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
 
     @Test
     void testFindAllAndSaveUser() {
@@ -66,6 +75,21 @@ public class UserServiceTest {
     }
 
     @Test
+    void testDeleteUserById_userNotFound() {
+        Long id = 0L;
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.deleteById(id));
+    }
+
+    @Test
+    void testDeleteUserById_cantDeleteAdmin() {
+        Optional<User> adminUserOptional = userRepository.findByEmail("admin");
+        Assertions.assertTrue(adminUserOptional.isPresent());
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.deleteById(adminUserOptional.get().getId()));
+    }
+
+    @Test
     void testUserFindById(){
         User user = new User("Test3", "Test3", "Test3");
         user = userRepository.save(user);
@@ -78,15 +102,16 @@ public class UserServiceTest {
 
     }
 
-
-
-
     @Test
     @Transactional
     void testEnableUser(){
         User user = new User("Tes4", "Test4", "Test4");
         user = userService.save(user);
         Assertions.assertEquals(false, user.getEnabled());
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            userService.enableUser("non-existent-email");
+        });
 
         userService.enableUser("Test4");
 
@@ -119,6 +144,24 @@ public class UserServiceTest {
 
         Assertions.assertNotNull(encodedPassword);
         Assertions.assertNotEquals(plainTextPassword, encodedPassword);
+    }
+
+    @Test
+    void testSignUpUser() {
+        User user = new User("Test5", "Test5", "Test5", "1234");
+        String token = userService.signUpUser(user);
+
+        Assertions.assertThrows(IllegalStateException.class, () -> userService.signUpUser(user));
+
+        Assertions.assertNotNull(token);
+
+        Optional<User> savedUser = userRepository.findByEmail("Test5");
+        Assertions.assertTrue(savedUser.isPresent());
+
+        Optional<ConfirmationToken> savedToken = confirmationTokenRepository.findByToken(token);
+        Assertions.assertNotNull(savedToken);
+
+        userService.deleteById(savedUser.get().getId());
     }
 
 }
