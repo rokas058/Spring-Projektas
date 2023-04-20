@@ -13,8 +13,9 @@ import java.util.Date;
 public class JwtGenerator {
 
     private final Date currentDate = new Date();
-    //milisekundes
-    private final int expDate = 1000*60*60;
+
+    // 7 dienas galios
+    private final int expDate = 1000*60*60*24*7;
     private final Date exiredDate = new Date(currentDate.getTime() + expDate);
 
     private final String JWT_SECRET = "655368566D597133743677397A24432646294A404E635166546A576E5A723475";
