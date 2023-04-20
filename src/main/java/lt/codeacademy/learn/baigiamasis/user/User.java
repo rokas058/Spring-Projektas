@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lt.codeacademy.learn.baigiamasis.purchase.Purchase;
 import org.hibernate.annotations.Cascade;

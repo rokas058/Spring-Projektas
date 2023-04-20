@@ -1,7 +1,6 @@
 package lt.codeacademy.learn.baigiamasis.registration;
 
 
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

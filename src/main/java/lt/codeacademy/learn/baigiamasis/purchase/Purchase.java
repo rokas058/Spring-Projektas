@@ -1,7 +1,6 @@
 package lt.codeacademy.learn.baigiamasis.purchase;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lt.codeacademy.learn.baigiamasis.produktas.Produktas;

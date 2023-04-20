@@ -2,11 +2,9 @@ package lt.codeacademy.learn.baigiamasis.registration.token;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

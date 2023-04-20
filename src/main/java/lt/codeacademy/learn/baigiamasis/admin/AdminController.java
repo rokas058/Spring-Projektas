@@ -2,14 +2,12 @@ package lt.codeacademy.learn.baigiamasis.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import lt.codeacademy.learn.baigiamasis.purchase.Purchase;
 import lt.codeacademy.learn.baigiamasis.purchase.PurchaseService;
 import lt.codeacademy.learn.baigiamasis.purchase.dto.PurchaseDto;
-import lt.codeacademy.learn.baigiamasis.purchase.dto.PurchaseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
